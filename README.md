@@ -10,7 +10,7 @@
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--3.5-412991?style=for-the-badge&logo=openai)](https://openai.com)
 [![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?style=for-the-badge&logo=windows)](https://microsoft.com/windows)
 [![Built](https://img.shields.io/badge/Built-2021-orange?style=for-the-badge)](https://github.com/abhigyan24-ops/GyaniAssistant)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Archive%20%2F%20WIP-yellow?style=for-the-badge)](https://github.com/abhigyan24-ops/GyaniAssistant)
 
 *Gyani listens, understands Hindi & English, thinks with GPT, and talks back — all hands-free.*
 
@@ -25,6 +25,25 @@
 > Gyani was built as a **solo project** to explore what was possible with the OpenAI API (which was barely public at the time), Python speech recognition, and desktop automation — all stitched together into a Hindi-English voice assistant that could genuinely hold a conversation, read you the news, control your PC, and more.
 >
 > This was before the AI wave. Before everyone had a ChatGPT wrapper. Just curiosity, Python, and a mic. 🎤
+
+---
+
+## ⚠️ Important — Read Before Running
+
+**This is the original 2021 source code, preserved as-is for archival purposes.**
+
+A lot has changed in the Python/AI ecosystem since 2021. If you try to run this code today, several things will likely break:
+
+| What's broken | Why | Fix |
+|---|---|---|
+| `openai` API calls | OpenAI released v1.0 SDK in 2023 — completely different syntax | Upgrade to `openai>=1.0` and rewrite calls |
+| `googletrans` | Unofficial API breaks frequently | Pin to `googletrans==3.1.0a0` |
+| `pyaudio` | Needs PortAudio C library — painful on modern Windows | Use `conda install pyaudio` |
+| `BeautifulSoup` scraping | Google changes its HTML structure often — temperature scraping may fail | Use a proper weather API instead |
+| API keys | All hardcoded keys have been removed and are expired anyway | Get fresh keys from each provider |
+| Python 3.14 | Many packages don't have wheels for 3.14 yet | Use Python 3.11 |
+
+> **TL;DR** — This code was written in 2021 with library versions from that era. It is being actively updated and refactored. Treat this as a reference / work-in-progress, not a plug-and-play project.
 
 ---
 
@@ -86,7 +105,7 @@ GyaniAssistant/
 
 ### Prerequisites
 
-- **Python 3.11** (recommended — 3.14 has dependency issues with pyaudio)
+- **Python 3.11** (strongly recommended — not 3.12+ or 3.14)
 - **Windows OS** (some modules are Windows-only)
 - A working **microphone**
 
@@ -103,7 +122,7 @@ cd GyaniAssistant
 pip install -r requirements.txt
 ```
 
-> ⚠️ **PyAudio on Windows** requires PortAudio. If `pip install pyaudio` fails, install via conda:
+> ⚠️ **PyAudio on Windows** requires PortAudio. If `pip install pyaudio` fails:
 > ```bash
 > conda install pyaudio
 > ```
@@ -159,33 +178,29 @@ python brain.py   # Start conversation directly
 
 ---
 
-## 🛠️ Known Issues & Roadmap
+## 🛣️ Refactor Roadmap
 
-- [ ] GUI (`gui.py`) — under active development with customtkinter
-- [ ] PyAudio install issues on Python 3.14 (use Python 3.11)
-- [ ] `SetReminder.py` — elif chain bug being fixed
-- [ ] Move all API keys to `.env` file using python-dotenv
-- [ ] Upgrade OpenAI v0 API calls to v1.x SDK
-- [ ] Add intent detection to route voice commands to feature modules
+This project is being modernised. Here's what's planned:
+
+- [ ] Upgrade OpenAI SDK from v0 to v1.x
+- [ ] Move all API keys to `.env` with python-dotenv
+- [ ] Fix `SetReminder.py` elif chain bug
+- [ ] Replace Google scraping in `Temperature.py` with a proper weather API
+- [ ] Build full GUI with customtkinter (`gui.py`)
+- [ ] Add voice command intent detection to route to feature modules
 - [ ] Cross-platform support (Linux / macOS)
 
 ---
 
 ## 🤝 Contributing
 
-Pull requests are welcome! For major changes, please open an issue first.
+Pull requests are welcome! Especially help with the refactor roadmap above.
 
 1. Fork the repo
 2. Create your branch (`git checkout -b feature/YourFeature`)
 3. Commit your changes (`git commit -m 'Add YourFeature'`)
 4. Push to the branch (`git push origin feature/YourFeature`)
 5. Open a Pull Request
-
----
-
-## ⚠️ Disclaimer
-
-This project is for educational purposes. Never commit real API keys to a public repository. Always use environment variables or a `.env` file for secrets.
 
 ---
 
